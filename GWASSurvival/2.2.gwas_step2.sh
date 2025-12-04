@@ -1,0 +1,13 @@
+Rscript /home/luohh/Biosoft/GATE/extdata/step2_SPAtests.R \
+        --bgenFile=/home/luohh/UKB50wMultiPcancer/05.otherAnalysis/04.gwasSurvival/01.data/01.genoData/mpcOnly.bgen \
+        --bgenFileIndex=/home/luohh/UKB50wMultiPcancer/05.otherAnalysis/04.gwasSurvival/01.data/01.genoData/mpcOnly.bgen.bgi \
+        --minMAF=0.0001 \
+        --minMAC=1 \
+        --sampleFile=/home/luohh/UKB50wMultiPcancer/05.otherAnalysis/04.gwasSurvival/01.data/02.phenoData/sampleID.txt \
+        --GMMATmodelFile=/home/luohh/UKB50wMultiPcancer/05.otherAnalysis/04.gwasSurvival/03.result/step1Results.rda \
+        --varianceRatioFile=/home/luohh/UKB50wMultiPcancer/05.otherAnalysis/04.gwasSurvival/03.result/step1Results.varianceRatio.txt \
+        --SAIGEOutputFile=/home/luohh/UKB50wMultiPcancer/05.otherAnalysis/04.gwasSurvival/03.result/step2Results.GWAS.txt \
+        --numLinesOutput=2 \
+        --IsOutputAFinCaseCtrl=TRUE \
+        --IsOutputNinCaseCtrl=TRUE \
+        --IsSPAfast=TRUE

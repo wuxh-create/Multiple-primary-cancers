@@ -1,0 +1,44 @@
+---
+title: "Untitled"
+author: "luohh"
+date: "2024-01-03"
+output: html_document
+---
+
+
+```{r}
+### 导入包
+library(tidyverse)
+#library(data.table)
+library(randomcoloR)
+
+### 读取数据
+rawPlot.data <- read.table("/home/luohh/UKB50wMultiPcancer/05.otherAnalysis/01.globlePattern/03.result/5.1.cancerClassPlot.data",header=T,stringsAsFactors = F)
+
+plotData <- reshape2::melt(rawPlot.data,id=c('cancerName'))
+plotData$variable <- factor(plotData$variable,levels = rev(paste("cancer",1:36,sep = "")))
+plotData$cancerName <- factor(plotData$cancerName,levels = rev(unique(plotData$cancerName)))
+
+### 设置随机颜色
+palette <- randomColor(count = 30)
+mypalette <- rev(c("#9E0142","#F46D43","#FEE08B","#E6F598","#66C2A5","#5E4FA2",palette))
+
+### 画图 8.5 x 8.5
+ggplot(plotData,aes(x=cancerName,y=value,fill=variable))+
+  geom_bar(stat = 'identity')+
+  theme_classic()+
+  ylab(label = "Proportion (%)")+
+  theme(
+        #axis.text.y = element_text(angle = 45,hjust = 1.0,color = 'black',size = 14),
+        axis.text.y = element_text(hjust = 1.0,color = 'black',size = 14),
+        axis.text.x = element_text(color = 'black',size = 14),
+        axis.title.y = element_blank(),
+        axis.title.x = element_text(color = 'black',size = 20,face = 'bold'),
+        legend.position = "",
+        panel.border = element_rect(color = "black", size = 1, fill = NA))+
+  scale_y_continuous(expand=c(0,1),breaks = c(0,20,40,60,80,100))+
+  coord_flip()+ 
+  scale_fill_manual(values = mypalette)
+
+```
+

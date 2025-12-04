@@ -1,0 +1,43 @@
+---
+title: "4.2.Rplot-alluvial"
+author: "luohh"
+date: "2023-12-21"
+output: html_document
+---
+
+
+
+```{r}
+### alluvial 包 （炜炜师兄）
+remotes::install_github("mbojan/alluvial", build_vignettes=TRUE)
+library(alluvial)
+library(data.table)
+library(randomcoloR)
+
+### 导入数据
+data <- read.table("/home/luohh/UKB50wMultiPcancer/05.otherAnalysis/01.globlePattern/03.result/4.1.alluvial.2mpc.gt25.data",header = T,stringsAsFactors = F)
+
+cols <- hsv(h = sample(1:8/10), s = sample(3:8)/8, v = sample(3:8)/8)
+cols <- randomColor(count = 68) 
+cols <- rep("#C2C2C2",68)
+cols[data$value>100] <- "#6699CC"
+ord <- list(NULL, with(data, order(cancer1, cancer2)))
+
+### 冲击图 
+alluvial(
+  data[,1:2], alpha=1,
+  freq = data$value,
+  blocks = T,
+  gap.width=0.2, # 块的间隔
+  xw = 0.3, # 线的曲度
+  cw = 0.01, # 字块大小
+  # col=c('#BDBDBD','#4EAE4A','#984EA3')
+  # axis_labels='',
+  axes=T,
+  ann=T,
+  #col = cols[match(data$cancer1, unique(data$cancer2))],
+  col = cols,
+  ordering=ord
+)
+```
+

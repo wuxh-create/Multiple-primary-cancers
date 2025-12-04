@@ -1,0 +1,22 @@
+---
+title: "Untitled"
+author: "luohh"
+date: "2023-07-03"
+output: html_document
+---
+
+
+```{r}
+### 所有多原发癌样本
+allPcancer.sample <- read.table("/home/luohh/UKB50wMultiPcancer/01.data/04.sampleData/03.multiPcancer/multiPCancer.sample")
+
+### 提取 index 癌症 多原发癌
+all_cancer_file <- read.table("/home/luohh/UKB50wMultiPcancer/01.data/04.sampleData/04.cancerGroup/03.whiteData/allfile.list")
+for(myfile in all_cancer_file$V1){
+  cancer_type <- unlist(strsplit(myfile,split = "[.]"))[1]
+  index_cancer_sample <- read.table(paste("/home/luohh/UKB50wMultiPcancer/01.data/04.sampleData/04.cancerGroup/03.whiteData/",myfile,sep = ""))
+  filter_cancer_sample <- intersect(index_cancer_sample$V1,allPcancer.sample$V1)
+  write.table(filter_cancer_sample,paste("/home/luohh/UKB50wMultiPcancer/01.data/04.sampleData/07.SpecificMPC/",cancer_type,'.mpc.sample',sep = ""),row.names = F,col.names = F,quote = F)
+}
+```
+

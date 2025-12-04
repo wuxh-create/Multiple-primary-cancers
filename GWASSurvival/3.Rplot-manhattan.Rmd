@@ -1,0 +1,27 @@
+---
+title: "Untitled"
+author: "luohh"
+date: "2024-01-09"
+output: html_document
+---
+
+
+```{r}
+###
+#曼哈顿图 导入包
+library(CMplot)
+library(data.table)
+
+### 读取风险区间内所有SNPs位点
+#riskLocu.rsid <- fread("/home/luohh/UKB50wMultiPcancer/03.result/01.MPC/03.COJO/01.data/03.riskLociSNPs/riskLoci.allLoci.rsid",header = F,stringsAsFactors = F,data.table = F)
+
+gwasResult <- fread("/home/luohh/UKB50wMultiPcancer/05.otherAnalysis/04.gwasSurvival/03.result/step2Results.GWAS.txt",header = T,stringsAsFactors = F,data.table = F,sep = " ")
+gwasResult.plot <- gwasResult[,c(3,1,2,14)]
+colnames(gwasResult.plot) <- c("SNP","chr","pos","p")
+
+#CMplot(gwasResult.plot,plot.type = "m",LOG10 = T,threshold = c(5e-8), threshold.lty = c(1), threshold.lwd = c(1), threshold.col=c("black"), signal.col=c("#B0282F"), highlight.col=c("#B0282F"), col=c("#2A5888","#4396B1"), signal.cex=c(1), signal.pch=c(19), cex = 0.7, highlight = riskLocu.rsid,cex.axis=1.5,cex.lab=2,file="pdf")
+CMplot(gwasResult.plot,plot.type = "m",LOG10 = T,threshold = c(5e-8), threshold.lty = c(1), threshold.lwd = c(1), threshold.col=c("black"), signal.col=c("#B0282F"), highlight.col=c("#B0282F"), col=c("#2A5888","#4396B1"), signal.cex=c(1), signal.pch=c(19), cex = 0.7 ,cex.axis=1.5,cex.lab=2,file="pdf")
+
+CMplot(gwasResult.plot,plot.type = "q",conf.int = F,box = FALSE,threshold.lty = 2,threshold.col = "red",cex=0.6,cex.axis=1.5,cex.lab=2,file="pdf")
+```
+

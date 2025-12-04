@@ -1,0 +1,17 @@
+Rscript /home/luohh/Biosoft/GATE/extdata/step1_fitNULLGLMM.R \
+        --plinkFile=/home/luohh/UKB50wMultiPcancer/05.otherAnalysis/04.gwasSurvival/01.data/01.genoData/mpcOnly \
+        --phenoFile=/home/luohh/UKB50wMultiPcancer/05.otherAnalysis/04.gwasSurvival/01.data/02.phenoData/pheno.txt \
+        --phenoCol=caseControl \
+        --covarColList=sex,age,ageAtDiagnosis,stage,pc1,pc2,pc3,pc4,pc5,pc6,pc7,pc8,pc9,pc10 \
+        --eventTimeCol=AgeOfEventFinal \
+        --eventTimeBinSize=1 \
+        --sampleIDColinphenoFile=sampleID \
+        --traitType=survival \
+        --outputPrefix=/home/luohh/UKB50wMultiPcancer/05.otherAnalysis/04.gwasSurvival/03.result/step1Results \
+        --nThreads=100 \
+        --LOCO=FALSE \
+        --minMAFforGRM=0.1 \
+        --skipModelFitting=FALSE \
+        --tauInit=1,0 \
+        --pcgforUhatforSurvAnalysis=FALSE \
+        --numRandomMarkerforVarianceRatio=15000

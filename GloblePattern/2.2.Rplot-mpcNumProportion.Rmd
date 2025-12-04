@@ -1,0 +1,128 @@
+---
+title: "Untitled"
+author: "luohh"
+date: "2023-12-20"
+output: html_document
+---
+
+
+```{r}
+### 总癌症数量
+library(tidyverse)
+library(randomcoloR)
+
+
+### 读取数据
+cancerData <- read.table("/home/wuxh/03.MultiPCancer/luohh/UKB50wMultiPcancer/05.otherAnalysis/01.globlePattern/03.result/2.indexCancer.NumAndProportion.data",header=T,stringsAsFactors = F)
+cancerData$cancerName <- factor(cancerData$cancerName,levels = cancerData$cancerName[order(cancerData$totalNumber,decreasing = T)])
+cancerData2 <- reshape2::melt(cancerData,id=c('cancerName',"totalNumber","proportion"))
+colnames(cancerData2) <- c("CancerClass","totalNumber","proportion","Class","SampleNumber")
+cancerData2$Class <- factor(cancerData2$Class,rev(unique(cancerData2$Class)))
+
+
+### 数量 7 x 13
+ggplot(cancerData2,aes(x=CancerClass,y=SampleNumber,fill=Class))+
+  geom_bar(stat = 'identity')+
+  theme_classic()+
+  ylab(label = "Number of Individuals")+
+  theme(axis.text.x = element_text(angle = 45,hjust = 1.0,color = 'black',size = 14),
+        axis.text.y = element_text(color = 'black',size = 14),
+        axis.title.x = element_blank(),
+        axis.title.y = element_text(color = 'black',size = 20,face = 'bold'),
+        legend.position = "")+
+  geom_text(aes(label=totalNumber),size=3.5,vjust=-0.5)+
+  scale_y_continuous(expand=c(0,300),limits = c(0,22000))+
+  scale_fill_manual(values = c("#FF8D00","#BB1839"))
+
+
+
+######################################################################################################
+### 计算比例
+cancerData2$Proportion <- (cancerData2$SampleNumber/cancerData2$totalNumber)*100
+
+### 比例 4.5 x 13
+ggplot(cancerData2,aes(x=CancerClass,y=Proportion,fill=Class))+
+  geom_bar(stat = 'identity')+
+  theme_classic()+
+  ylab(label = "Proportion (%)")+
+  theme(axis.text.x = element_text(angle = 45,hjust = 1.0,color = 'black',size = 14),
+        axis.text.y = element_text(color = 'black',size = 14),
+        axis.title.x = element_blank(),
+        axis.title.y = element_text(color = 'black',size = 20,face = 'bold'),
+        legend.position = "",
+        panel.border = element_rect(color = "black", linewidth = 1, fill = NA))+
+  scale_y_continuous(expand=c(0,2))+
+  scale_fill_manual(values = c("#FF8D00","#BB1839"))
+```
+
+
+
+
+# new——code
+# 2024.12.11
+# wuxiaohong
+{
+  ---
+  title: "Untitled"
+author: "luohh"
+date: "2023-12-20"
+output: html_document
+---
+  
+  
+  ```{r}
+### 总癌症数量
+library(tidyverse)
+library(randomcoloR)
+
+
+### 读取数据
+cancerData <- read.table("/home/wuxh/03.MultiPCancer/luohh/UKB50wMultiPcancer/05.otherAnalysis/01.globlePattern/03.result/2.indexCancer.NumAndProportion.data",header=T,stringsAsFactors = F)
+cancerData$cancerName <- factor(cancerData$cancerName,levels = cancerData$cancerName[order(cancerData$totalNumber,decreasing = T)])
+cancerData2 <- reshape2::melt(cancerData,id=c('cancerName',"totalNumber","proportion"))
+colnames(cancerData2) <- c("CancerClass","totalNumber","proportion","Class","SampleNumber")
+cancerData2$Class <- factor(cancerData2$Class,rev(unique(cancerData2$Class)))
+
+
+### 数量 7 x 13
+number<-ggplot(cancerData2,aes(x=CancerClass,y=SampleNumber,fill=Class))+
+  geom_bar(stat = 'identity',width = 0.6)+
+  theme_classic()+
+  ylab(label = "Number of Individuals")+
+  theme(axis.text.x = element_text(angle = 45,hjust = 1.0,color = 'black',size = 14),
+        axis.text.y = element_text(color = 'black',size = 14),
+        axis.title.x = element_blank(),
+        axis.title.y = element_text(color = 'black',size = 20,face = 'bold'),
+        legend.position = "")+
+  geom_text(aes(label=totalNumber),size=3.5,vjust=-0.5)+
+  scale_y_continuous(expand=c(0,300),limits = c(0,22000))+
+  scale_fill_manual(values = c("#FF8D00","#BB1839"))
+
+ggsave("/home/wuxh/03.MultiPCancer/luohh/UKB50wMultiPcancer/05.otherAnalysis/01.globlePattern/04.plot/2.1.mpc.num_new.pdf", 
+       plot = number, device = "pdf", width = 12, height = 5.2)
+######################################################################################################
+### 计算比例
+cancerData2$Proportion <- (cancerData2$SampleNumber/cancerData2$totalNumber)*100
+
+### 比例 4.5 x 13
+Proportion<-ggplot(cancerData2,aes(x=CancerClass,y=Proportion,fill=Class))+
+  geom_bar(stat = 'identity',width = 0.6)+
+  theme_classic()+
+  ylab(label = "Proportion (%)")+
+  theme(axis.text.x = element_text(angle = 45,hjust = 1.0,color = 'black',size = 14),
+        axis.text.y = element_text(color = 'black',size = 14),
+        axis.title.x = element_blank(),
+        axis.title.y = element_text(color = 'black',size = 20,face = 'bold'),
+        legend.position = "",
+        panel.border = element_rect(color = "black", linewidth = 1, fill = NA))+
+  scale_y_continuous(expand=c(0,2))+
+  scale_fill_manual(values = c("#FF8D00","#BB1839"))
+
+ggsave("/home/wuxh/03.MultiPCancer/luohh/UKB50wMultiPcancer/05.otherAnalysis/01.globlePattern/04.plot/2.2.mpc.proportion_new.pdf", 
+       plot = Proportion, device = "pdf", width = 12, height = 5.2)
+
+
+```
+
+
+}
